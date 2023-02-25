@@ -82,16 +82,32 @@ public class OrderRepository {
         }
         return true;
     }
+    public int convertToMin(String str) {
+        String temp[] = str.split(":");
+        int given_time = 0;
+        for (int i = 0; i < 2; i++) {
+            if (i == 0) {
+                given_time += Integer.valueOf(temp[i]) * 60;
+            } else {
+                given_time += Integer.valueOf(temp[i]);
+            }
+        }
+        return given_time;
+    }
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
          int cnt=0;
+         int given_min=convertToMin(time);
+         int t=0;
+
+
         for(String str:OrderPartnerHashMap.get(partnerId)){
             Order curr=null;
-            curr=OrderHashMap.get(str);
-            int given_time=Integer.valueOf(time);
-            if(curr.getDeliveryTime()>given_time)cnt++;
+            curr=OrderHashMap.get(curr);
+            int curr_time=curr.getDeliveryTime();
+            if(given_min<curr_time)cnt++;
         }
-        return cnt;
-    };
+           return cnt;
+        }
     public String getLastDeliveryTimeByPartnerId(String partnerId){
         int last=0;
         List<String>list=OrderPartnerHashMap.get(partnerId);
