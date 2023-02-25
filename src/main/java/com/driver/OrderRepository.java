@@ -95,9 +95,9 @@ public class OrderRepository {
         return given_time;
     }
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time,String partnerId){
-         int cnt=0;
-         int given_min=convertToMin(time);
-         int t=0;
+        int cnt=0;
+        int given_min=convertToMin(time);
+        int t=0;
 
 
         for(String str:OrderPartnerHashMap.get(partnerId)){
@@ -106,16 +106,24 @@ public class OrderRepository {
             int curr_time=curr.getDeliveryTime();
             if(given_min<curr_time)cnt++;
         }
-           return cnt;
-        }
+        return cnt;
+    }
     public String getLastDeliveryTimeByPartnerId(String partnerId){
         int last=0;
+        String res="";
         List<String>list=OrderPartnerHashMap.get(partnerId);
         for(String str:list){
-            last=Math.max(last,Integer.valueOf(str));
+            Order curr=null;
+            curr=OrderHashMap.get(curr);
+            int curr_time=curr.getDeliveryTime();
+           // last=Math.max(last,curr_time);
+            if(curr_time>last){
+                last=curr_time;
+                res=str;
+            }
 
         }
-        return String.valueOf(last);
+        return res;
     };
     public void deletePartnerById(String partnerId){
 
