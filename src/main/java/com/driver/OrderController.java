@@ -1,5 +1,6 @@
 package com.driver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +82,12 @@ public class OrderController {
     }
     //07.
     @GetMapping("/get-orders-by-partner-id/{partnerId}")
-    public ResponseEntity<List<String>> getOrdersByPartnerId(@PathVariable String partnerId){
-        List<String> orders = null;
+    public ResponseEntity<List<Order>> getOrdersByPartnerId(@PathVariable String partnerId){
 
+        List<Order>orders = new ArrayList<>();
+
+        //orders=orderService.getOrdersByPartnerId(partnerId);
         orders=orderService.getOrdersByPartnerId(partnerId);
-
         //orders should contain a list of orders by PartnerId
 
         return new ResponseEntity<>(orders, HttpStatus.CREATED);

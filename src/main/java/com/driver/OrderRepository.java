@@ -50,10 +50,14 @@ public class OrderRepository {
         }
         return cnt;
     };
-    public List<String> getOrdersByPartnerId(String partnerId){
-        List<String>list=new ArrayList<>();
+    public List<Order> getOrdersByPartnerId(String partnerId){
+        List<Order>list=new ArrayList<>();
         if(OrderPartnerHashMap.containsKey(partnerId)){
-            list=OrderPartnerHashMap.get(partnerId);
+            for(String str:OrderPartnerHashMap.get(partnerId)){
+                if(OrderHashMap.containsKey(str)){
+                    list.add(OrderHashMap.get(str));
+                }
+            }
             return  list;
         }
         return list;
